@@ -75,7 +75,7 @@ ptyprocess==0.7.0
 pyarrow==6.0.0
 pycountry==20.7.3
 pycparser==2.21
-pydantic==1.7.2
+pydantic
 pydeck==0.7.1
 Pygments==2.10.0
 pyparsing==2.4.7
