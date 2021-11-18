@@ -23,7 +23,6 @@ debugpy==1.5.1
 decorator==5.1.0
 defusedxml==0.7.1
 docopt==0.6.2
-spacy==3.1.0
 https://github.com/explosion/spacy-models/releases/download/en_core_web_sm-3.0.0/en_core_web_sm-3.0.0.tar.gz#egg=en_core_web_sm
 entrypoints==0.3
 gensim==3.6.0
