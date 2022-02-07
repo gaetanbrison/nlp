@@ -15,6 +15,7 @@ from nltk.corpus import stopwords
 from pathlib import Path
 # Perform standard imports
 import spacy
+
 nlp = spacy.load('en_core_web_sm')
 from spacy import displacy
 from annotated_text import annotated_text
@@ -44,24 +45,24 @@ import seaborn as sns
 import nltk
 from nltk.sentiment.vader import SentimentIntensityAnalyzer
 
-
 st.set_page_config(
     page_title="Drama Critiques Playground", layout="wide", page_icon="./images/flask.png"
 )
 
+
 def sumy_summarizer(docx):
-	parser = PlaintextParser.from_string(docx,Tokenizer("english"))
-	lex_summarizer = LexRankSummarizer()
-	summary = lex_summarizer(parser.document,3)
-	summary_list = [str(sentence) for sentence in summary]
-	result = ' '.join(summary_list)
-	return result
+    parser = PlaintextParser.from_string(docx, Tokenizer("english"))
+    lex_summarizer = LexRankSummarizer()
+    summary = lex_summarizer(parser.document, 3)
+    summary_list = [str(sentence) for sentence in summary]
+    result = ' '.join(summary_list)
+    return result
+
 
 def img_to_bytes(img_path):
     img_bytes = Path(img_path).read_bytes()
     encoded = base64.b64encode(img_bytes).decode()
     return encoded
-
 
 
 def main():
@@ -77,7 +78,6 @@ def main():
         """,
             unsafe_allow_html=True,
         )
-
 
     # Hide the Streamlit header and footer
     def hide_header_footer():
@@ -105,24 +105,15 @@ def main():
     )
     st.markdown("     ")
 
-    st.markdown("---")
-
-
     selected_indices = []
     master_review = "DEFAULT REVIEW - This is the season in which theatres revisit their histories. In the crumbling glory of Wilton’s Music Hall, east London, Fiona Shaw is reprising her wild version of The Waste Land, talking about death in the City, with the aid of Music Hall voices. Hackney Empire has burst into its traditional life with rousing panto. Meanwhile, the Orange Tree is producing The Lady or the Tiger, which had its premiere at the theatre in 1975 and was revived there in 1989. Now it’s back again; I wish it wasn’t. Based on a whimsical 1882 story by Frank Stockton, the show has words by Michael Richmond and Jeremy Paul and music by Nola York, who once sang with the Chantelles and was the first woman to write a complete score for a West End musical. It has a few good mots, a dash of sauce, but hardly any point It features one despotic ruler who follows his subjects’ every wiggle “from sperm to worm”, one reluctantly virgin daughter (“Think of your position”; “I am, I wish it was horizontal”), one drippy suitor and one multipurpose character who flips from role to role by changing his hat. Riona O’Connor has a suitably 70s Lulu-like shout of a voice but does too much gurgling to be really convincing as a grown-up: she sings better than she swings. As the naughty king - ooh what a scamp that tyrant is - Howard Samuels dispenses oeillades, pecks on the cheeks and pats on the knees to the ladies in the front row. Sam Walters’s production is almost eerily pleasant. It’s like a panto that doesn’t yell but quietly chortles."
-
 
     def file_select(folder='./datasets'):
         filelist = os.listdir(folder)
         selectedfile = st.sidebar.selectbox('', filelist)
         return os.path.join(folder, selectedfile)
 
-
-
-
-
-    df = pd.read_csv("datasets/Corpus_II.csv")
-
+    df = pd.read_csv("datasets/Corpus_I.csv")
 
     index_review = 0
 
@@ -133,9 +124,10 @@ def main():
         ),
         unsafe_allow_html=True,
     )
-
+    st.markdown("---")
     st.write(f"                                          ")
     st.header("00 - Show  Dataset")
+
     if master_review == "DEFAULT REVIEW - This is the season in which theatres revisit their histories. In the crumbling glory of Wilton’s Music Hall, east London, Fiona Shaw is reprising her wild version of The Waste Land, talking about death in the City, with the aid of Music Hall voices. Hackney Empire has burst into its traditional life with rousing panto. Meanwhile, the Orange Tree is producing The Lady or the Tiger, which had its premiere at the theatre in 1975 and was revived there in 1989. Now it’s back again; I wish it wasn’t. Based on a whimsical 1882 story by Frank Stockton, the show has words by Michael Richmond and Jeremy Paul and music by Nola York, who once sang with the Chantelles and was the first woman to write a complete score for a West End musical. It has a few good mots, a dash of sauce, but hardly any point It features one despotic ruler who follows his subjects’ every wiggle “from sperm to worm”, one reluctantly virgin daughter (“Think of your position”; “I am, I wish it was horizontal”), one drippy suitor and one multipurpose character who flips from role to role by changing his hat. Riona O’Connor has a suitably 70s Lulu-like shout of a voice but does too much gurgling to be really convincing as a grown-up: she sings better than she swings. As the naughty king - ooh what a scamp that tyrant is - Howard Samuels dispenses oeillades, pecks on the cheeks and pats on the knees to the ladies in the front row. Sam Walters’s production is almost eerily pleasant. It’s like a panto that doesn’t yell but quietly chortles.":
         num = st.number_input('No. of Rows', 5, 10)
         head = st.radio('View from top (head) or bottom (tail)', ('Head', 'Tail'))
@@ -164,7 +156,6 @@ def main():
 
         st.write(f"                                          ")
         st.write(f"                                          ")
-
 
         snippet = f"""
 
@@ -183,35 +174,8 @@ def main():
     st.markdown("---")
 
     st.write(f"                                          ")
-    st.header("01 - Show  Review")
-    if master_review == "DEFAULT REVIEW - This is the season in which theatres revisit their histories. In the crumbling glory of Wilton’s Music Hall, east London, Fiona Shaw is reprising her wild version of The Waste Land, talking about death in the City, with the aid of Music Hall voices. Hackney Empire has burst into its traditional life with rousing panto. Meanwhile, the Orange Tree is producing The Lady or the Tiger, which had its premiere at the theatre in 1975 and was revived there in 1989. Now it’s back again; I wish it wasn’t. Based on a whimsical 1882 story by Frank Stockton, the show has words by Michael Richmond and Jeremy Paul and music by Nola York, who once sang with the Chantelles and was the first woman to write a complete score for a West End musical. It has a few good mots, a dash of sauce, but hardly any point It features one despotic ruler who follows his subjects’ every wiggle “from sperm to worm”, one reluctantly virgin daughter (“Think of your position”; “I am, I wish it was horizontal”), one drippy suitor and one multipurpose character who flips from role to role by changing his hat. Riona O’Connor has a suitably 70s Lulu-like shout of a voice but does too much gurgling to be really convincing as a grown-up: she sings better than she swings. As the naughty king - ooh what a scamp that tyrant is - Howard Samuels dispenses oeillades, pecks on the cheeks and pats on the knees to the ladies in the front row. Sam Walters’s production is almost eerily pleasant. It’s like a panto that doesn’t yell but quietly chortles.":
-        st.markdown("The review you selected is the following one: ")
-        st.write('"' + df["Review"][index_review] + '"')
-
-    else:
-        st.markdown("The review you selected is the following one: ")
-        st.write('"' + master_review + '"')
-
-
-    snippet = f"""
-
-    >>> import pandas as pd
-    >>> import numpy as  as np
-
-    >>> df["Review"][0]
-
-
-    """
-    code_header_placeholder = st.empty()
-    snippet_placeholder = st.empty()
-    code_header_placeholder.subheader(f"**Code for the step: 01 - Show  Review**")
-    snippet_placeholder.code(snippet)
-    st.markdown("---")
-
-
-
-    st.write(f"                                          ")
-    st.header("02 - Basic Information")
+    st.header("01 - Basic Information")
+    st.write("Let’s have a look at the main information of this review!")
     if master_review == "DEFAULT REVIEW - This is the season in which theatres revisit their histories. In the crumbling glory of Wilton’s Music Hall, east London, Fiona Shaw is reprising her wild version of The Waste Land, talking about death in the City, with the aid of Music Hall voices. Hackney Empire has burst into its traditional life with rousing panto. Meanwhile, the Orange Tree is producing The Lady or the Tiger, which had its premiere at the theatre in 1975 and was revived there in 1989. Now it’s back again; I wish it wasn’t. Based on a whimsical 1882 story by Frank Stockton, the show has words by Michael Richmond and Jeremy Paul and music by Nola York, who once sang with the Chantelles and was the first woman to write a complete score for a West End musical. It has a few good mots, a dash of sauce, but hardly any point It features one despotic ruler who follows his subjects’ every wiggle “from sperm to worm”, one reluctantly virgin daughter (“Think of your position”; “I am, I wish it was horizontal”), one drippy suitor and one multipurpose character who flips from role to role by changing his hat. Riona O’Connor has a suitably 70s Lulu-like shout of a voice but does too much gurgling to be really convincing as a grown-up: she sings better than she swings. As the naughty king - ooh what a scamp that tyrant is - Howard Samuels dispenses oeillades, pecks on the cheeks and pats on the knees to the ladies in the front row. Sam Walters’s production is almost eerily pleasant. It’s like a panto that doesn’t yell but quietly chortles.":
         st.markdown("Number of rows and columns helps us to determine how large the dataset is.")
         st.text('* Review number of words')
@@ -226,7 +190,6 @@ def main():
         st.text('* Review number of characters')
         st.write(len(master_review))
 
-
     snippet = f"""
 
     >>> import pandas as pd
@@ -236,7 +199,7 @@ def main():
     >>> len(df["Review"][0].split(" "))
 
     # &
-    
+
     # Review number of characters
     >>> len(df["Review"][0])
 
@@ -248,19 +211,20 @@ def main():
     snippet_placeholder.code(snippet)
     st.markdown("---")
 
-
     st.write(f"                                          ")
-    st.header("03 - Tokenization")
+    st.header("02 - Tokenization")
+    st.write(
+        "Tokenization is the act of breaking up a sequence of strings into pieces such as words, keywords, phrases, symbols and other elements called tokens ")
     if master_review == "DEFAULT REVIEW - This is the season in which theatres revisit their histories. In the crumbling glory of Wilton’s Music Hall, east London, Fiona Shaw is reprising her wild version of The Waste Land, talking about death in the City, with the aid of Music Hall voices. Hackney Empire has burst into its traditional life with rousing panto. Meanwhile, the Orange Tree is producing The Lady or the Tiger, which had its premiere at the theatre in 1975 and was revived there in 1989. Now it’s back again; I wish it wasn’t. Based on a whimsical 1882 story by Frank Stockton, the show has words by Michael Richmond and Jeremy Paul and music by Nola York, who once sang with the Chantelles and was the first woman to write a complete score for a West End musical. It has a few good mots, a dash of sauce, but hardly any point It features one despotic ruler who follows his subjects’ every wiggle “from sperm to worm”, one reluctantly virgin daughter (“Think of your position”; “I am, I wish it was horizontal”), one drippy suitor and one multipurpose character who flips from role to role by changing his hat. Riona O’Connor has a suitably 70s Lulu-like shout of a voice but does too much gurgling to be really convincing as a grown-up: she sings better than she swings. As the naughty king - ooh what a scamp that tyrant is - Howard Samuels dispenses oeillades, pecks on the cheeks and pats on the knees to the ladies in the front row. Sam Walters’s production is almost eerily pleasant. It’s like a panto that doesn’t yell but quietly chortles.":
         st.markdown("This is a view of the text split in tokens for the computer to better understand: ")
         doc = nlp(df["Review"][index_review])
-        text = df["Review"][index_review].replace(" "," | ")
+        text = df["Review"][index_review].replace(" ", " | ")
         st.write(text)
 
     else:
         st.markdown("This is a view of the text split in tokens for the computer to better understand: ")
         doc = nlp(master_review)
-        text = master_review.replace(" "," | ")
+        text = master_review.replace(" ", " | ")
         st.write(text)
 
     snippet = f"""
@@ -280,9 +244,12 @@ def main():
     snippet_placeholder.code(snippet)
     st.markdown("---")
 
-
     st.write(f"                                          ")
-    st.header("04 - Lemmatization")
+    st.header("03 - Lemmatization")
+    st.write("""Lemmatization is a linguistic term that means grouping together words with the same root or lemma but with
+different inflections or derivatives of meaning so they can be analyzed as one item. The aim is to take away
+inflectional suffixes and prefixes to bring out the word’s dictionary form. For example, to lemmatize the words
+“cats,” “cat’s,” and “cats’” means taking away the suffixes “s,” “’s,” and “s’” to bring out the root word “cat.”""")
     if master_review == "DEFAULT REVIEW - This is the season in which theatres revisit their histories. In the crumbling glory of Wilton’s Music Hall, east London, Fiona Shaw is reprising her wild version of The Waste Land, talking about death in the City, with the aid of Music Hall voices. Hackney Empire has burst into its traditional life with rousing panto. Meanwhile, the Orange Tree is producing The Lady or the Tiger, which had its premiere at the theatre in 1975 and was revived there in 1989. Now it’s back again; I wish it wasn’t. Based on a whimsical 1882 story by Frank Stockton, the show has words by Michael Richmond and Jeremy Paul and music by Nola York, who once sang with the Chantelles and was the first woman to write a complete score for a West End musical. It has a few good mots, a dash of sauce, but hardly any point It features one despotic ruler who follows his subjects’ every wiggle “from sperm to worm”, one reluctantly virgin daughter (“Think of your position”; “I am, I wish it was horizontal”), one drippy suitor and one multipurpose character who flips from role to role by changing his hat. Riona O’Connor has a suitably 70s Lulu-like shout of a voice but does too much gurgling to be really convincing as a grown-up: she sings better than she swings. As the naughty king - ooh what a scamp that tyrant is - Howard Samuels dispenses oeillades, pecks on the cheeks and pats on the knees to the ladies in the front row. Sam Walters’s production is almost eerily pleasant. It’s like a panto that doesn’t yell but quietly chortles.":
         st.markdown(
             "Missing values are known as null or NaN values. Missing data tends to **introduce bias that leads to misleading results.**")
@@ -318,8 +285,6 @@ def main():
         df_lemmatization = pd.DataFrame(
             {'Text': list_text, 'Position': list_pos, 'Unique Code': list_lemma, 'Lemma': list_lemma_, })
         st.dataframe(df_lemmatization)
-
-
 
     snippet = f"""
 
@@ -343,20 +308,21 @@ def main():
     """
     code_header_placeholder = st.empty()
     snippet_placeholder = st.empty()
-    code_header_placeholder.subheader(f"**Code for the step: 04 - Lemmatization**")
+    code_header_placeholder.subheader(f"**Code for the step: 03 - Lemmatization**")
     snippet_placeholder.code(snippet)
     st.markdown("---")
 
-
-
     st.write(f"                                          ")
-    st.header("05 - Name Entity Recognition")
+    st.header("04 - Name Entity Recognition")
+    st.write("""In Natural Language Processing, Named Entity Recognition (NER) is a process where a sentence or a chunk of
+text is parsed through to find entities that can be put under categories like names, organizations, locations, quantities,
+monetary values, percentages, etc. Traditional NER algorithms included only names, places, and organizations.""")
     if master_review == "DEFAULT REVIEW - This is the season in which theatres revisit their histories. In the crumbling glory of Wilton’s Music Hall, east London, Fiona Shaw is reprising her wild version of The Waste Land, talking about death in the City, with the aid of Music Hall voices. Hackney Empire has burst into its traditional life with rousing panto. Meanwhile, the Orange Tree is producing The Lady or the Tiger, which had its premiere at the theatre in 1975 and was revived there in 1989. Now it’s back again; I wish it wasn’t. Based on a whimsical 1882 story by Frank Stockton, the show has words by Michael Richmond and Jeremy Paul and music by Nola York, who once sang with the Chantelles and was the first woman to write a complete score for a West End musical. It has a few good mots, a dash of sauce, but hardly any point It features one despotic ruler who follows his subjects’ every wiggle “from sperm to worm”, one reluctantly virgin daughter (“Think of your position”; “I am, I wish it was horizontal”), one drippy suitor and one multipurpose character who flips from role to role by changing his hat. Riona O’Connor has a suitably 70s Lulu-like shout of a voice but does too much gurgling to be really convincing as a grown-up: she sings better than she swings. As the naughty king - ooh what a scamp that tyrant is - Howard Samuels dispenses oeillades, pecks on the cheeks and pats on the knees to the ladies in the front row. Sam Walters’s production is almost eerily pleasant. It’s like a panto that doesn’t yell but quietly chortles.":
         HTML_WRAPPER = """<div style="overflow-x: auto; border: 1px solid #e6e9ef; border-radius: 0.25rem; padding: 1rem">{}</div>"""
         st.markdown("This part assign a tag to each name and entity in a review: ")
-        #html = displacy.render(doc, style='ent', jupyter=True)
-        #html = html.replace("\n\n", "\n")
-        #st.write(HTML_WRAPPER.format(html), unsafe_allow_html=True)
+        # html = displacy.render(doc, style='ent', jupyter=True)
+        # html = html.replace("\n\n", "\n")
+        # st.write(HTML_WRAPPER.format(html), unsafe_allow_html=True)
         docx = nlp(df["Review"][0])
         html = displacy.render(docx, style="ent")
         html = html.replace("\n\n", "\n")
@@ -365,9 +331,9 @@ def main():
     else:
         HTML_WRAPPER = """<div style="overflow-x: auto; border: 1px solid #e6e9ef; border-radius: 0.25rem; padding: 1rem">{}</div>"""
         st.markdown("This part assign a tag to each name and entity in a review: ")
-        #html = displacy.render(doc, style='ent', jupyter=True)
-        #html = html.replace("\n\n", "\n")
-        #st.write(HTML_WRAPPER.format(html), unsafe_allow_html=True)
+        # html = displacy.render(doc, style='ent', jupyter=True)
+        # html = html.replace("\n\n", "\n")
+        # st.write(HTML_WRAPPER.format(html), unsafe_allow_html=True)
         docx = nlp(master_review)
         html = displacy.render(docx, style="ent")
         html = html.replace("\n\n", "\n")
@@ -392,10 +358,10 @@ def main():
     """
     code_header_placeholder = st.empty()
     snippet_placeholder = st.empty()
-    code_header_placeholder.subheader(f"**Code for the step: 05 - Name Entity Recognition**")
+    code_header_placeholder.subheader(f"**Code for the step: 04 - Name Entity Recognition**")
     snippet_placeholder.code(snippet)
     st.markdown("---")
-# check dupication rate
+    # check dupication rate
 
     # if master_review == "DEFAULT REVIEW - This is the season in which theatres revisit their histories. In the crumbling glory of Wilton’s Music Hall, east London, Fiona Shaw is reprising her wild version of The Waste Land, talking about death in the City, with the aid of Music Hall voices. Hackney Empire has burst into its traditional life with rousing panto. Meanwhile, the Orange Tree is producing The Lady or the Tiger, which had its premiere at the theatre in 1975 and was revived there in 1989. Now it’s back again; I wish it wasn’t. Based on a whimsical 1882 story by Frank Stockton, the show has words by Michael Richmond and Jeremy Paul and music by Nola York, who once sang with the Chantelles and was the first woman to write a complete score for a West End musical. It has a few good mots, a dash of sauce, but hardly any point It features one despotic ruler who follows his subjects’ every wiggle “from sperm to worm”, one reluctantly virgin daughter (“Think of your position”; “I am, I wish it was horizontal”), one drippy suitor and one multipurpose character who flips from role to role by changing his hat. Riona O’Connor has a suitably 70s Lulu-like shout of a voice but does too much gurgling to be really convincing as a grown-up: she sings better than she swings. As the naughty king - ooh what a scamp that tyrant is - Howard Samuels dispenses oeillades, pecks on the cheeks and pats on the knees to the ladies in the front row. Sam Walters’s production is almost eerily pleasant. It’s like a panto that doesn’t yell but quietly chortles.":
     #     st.markdown(" Duplication rate is defined as the ratio of  number of duplicates to total records in dataset.")
@@ -434,10 +400,12 @@ def main():
     # code_header_placeholder.subheader(f"**Code for the step: 06 - Part of Speech**")
     # snippet_placeholder.code(snippet)
     # st.markdown("---")
-# Sentiment Analysis
+    # Sentiment Analysis
 
     st.write(f"                                          ")
-    st.header("07 - Sentiment Analysis")
+    st.header("05 - Sentiment Analysis")
+    st.write("""Sentiment analysis is the process of detecting positive or negative sentiment in text. It’s often used by businesses
+to detect sentiment in social data, gauge brand reputation, and understand customers.""")
     if master_review == "DEFAULT REVIEW - This is the season in which theatres revisit their histories. In the crumbling glory of Wilton’s Music Hall, east London, Fiona Shaw is reprising her wild version of The Waste Land, talking about death in the City, with the aid of Music Hall voices. Hackney Empire has burst into its traditional life with rousing panto. Meanwhile, the Orange Tree is producing The Lady or the Tiger, which had its premiere at the theatre in 1975 and was revived there in 1989. Now it’s back again; I wish it wasn’t. Based on a whimsical 1882 story by Frank Stockton, the show has words by Michael Richmond and Jeremy Paul and music by Nola York, who once sang with the Chantelles and was the first woman to write a complete score for a West End musical. It has a few good mots, a dash of sauce, but hardly any point It features one despotic ruler who follows his subjects’ every wiggle “from sperm to worm”, one reluctantly virgin daughter (“Think of your position”; “I am, I wish it was horizontal”), one drippy suitor and one multipurpose character who flips from role to role by changing his hat. Riona O’Connor has a suitably 70s Lulu-like shout of a voice but does too much gurgling to be really convincing as a grown-up: she sings better than she swings. As the naughty king - ooh what a scamp that tyrant is - Howard Samuels dispenses oeillades, pecks on the cheeks and pats on the knees to the ladies in the front row. Sam Walters’s production is almost eerily pleasant. It’s like a panto that doesn’t yell but quietly chortles.":
         st.subheader("Analyse Your Text")
 
@@ -500,7 +468,6 @@ def main():
             st.success(result_sentiment)
             st.success(result_sentiment_2)
 
-
     snippet = f"""
 
     >>> import pandas as pd
@@ -518,18 +485,18 @@ def main():
     """
     code_header_placeholder = st.empty()
     snippet_placeholder = st.empty()
-    code_header_placeholder.subheader(f"**Code for the step: 07 - Sentiment Analysis**")
+    code_header_placeholder.subheader(f"**Code for the step: 05 - Sentiment Analysis**")
     snippet_placeholder.code(snippet)
     st.markdown("---")
 
-# Summarization
+    # Summarization
 
     st.write(f"                                          ")
-    st.header("08 - Text Summarization")
+    st.header("06 - Text Summarization")
     if master_review == "DEFAULT REVIEW - This is the season in which theatres revisit their histories. In the crumbling glory of Wilton’s Music Hall, east London, Fiona Shaw is reprising her wild version of The Waste Land, talking about death in the City, with the aid of Music Hall voices. Hackney Empire has burst into its traditional life with rousing panto. Meanwhile, the Orange Tree is producing The Lady or the Tiger, which had its premiere at the theatre in 1975 and was revived there in 1989. Now it’s back again; I wish it wasn’t. Based on a whimsical 1882 story by Frank Stockton, the show has words by Michael Richmond and Jeremy Paul and music by Nola York, who once sang with the Chantelles and was the first woman to write a complete score for a West End musical. It has a few good mots, a dash of sauce, but hardly any point It features one despotic ruler who follows his subjects’ every wiggle “from sperm to worm”, one reluctantly virgin daughter (“Think of your position”; “I am, I wish it was horizontal”), one drippy suitor and one multipurpose character who flips from role to role by changing his hat. Riona O’Connor has a suitably 70s Lulu-like shout of a voice but does too much gurgling to be really convincing as a grown-up: she sings better than she swings. As the naughty king - ooh what a scamp that tyrant is - Howard Samuels dispenses oeillades, pecks on the cheeks and pats on the knees to the ladies in the front row. Sam Walters’s production is almost eerily pleasant. It’s like a panto that doesn’t yell but quietly chortles.":
         st.subheader("Summarize Your Text")
 
-        message2 = st.text_area("Review",df["Review"][index_review])
+        message2 = st.text_area("Review", df["Review"][index_review])
         summary_options = st.selectbox("Choose Summarizer", ['sumy', 'gensim'])
         if st.button("Summarize"):
             if summary_options == 'sumy':
@@ -547,7 +514,7 @@ def main():
     else:
         st.subheader("Summarize Your Text")
 
-        message2 = st.text_area("Review",master_review)
+        message2 = st.text_area("Review", master_review)
         summary_options = st.selectbox("Choose Summarizer", ['sumy', 'gensim'])
         if st.button("Summarize"):
             if summary_options == 'sumy':
@@ -561,9 +528,6 @@ def main():
                 st.text("Using Gensim Summarizer ..")
                 summary_result = summarize(message2)
             st.success(summary_result)
-
-
-
 
     snippet = f"""
 
@@ -577,62 +541,61 @@ def main():
     """
     code_header_placeholder = st.empty()
     snippet_placeholder = st.empty()
-    code_header_placeholder.subheader(f"**Code for the step: 08 - Text Summarization**")
-    snippet_placeholder.code(snippet)
-    st.markdown("---")
-
-# Summarization
-
-    st.write(f"                                          ")
-    st.header("09 - Zoning")
-    if master_review == "DEFAULT REVIEW - This is the season in which theatres revisit their histories. In the crumbling glory of Wilton’s Music Hall, east London, Fiona Shaw is reprising her wild version of The Waste Land, talking about death in the City, with the aid of Music Hall voices. Hackney Empire has burst into its traditional life with rousing panto. Meanwhile, the Orange Tree is producing The Lady or the Tiger, which had its premiere at the theatre in 1975 and was revived there in 1989. Now it’s back again; I wish it wasn’t. Based on a whimsical 1882 story by Frank Stockton, the show has words by Michael Richmond and Jeremy Paul and music by Nola York, who once sang with the Chantelles and was the first woman to write a complete score for a West End musical. It has a few good mots, a dash of sauce, but hardly any point It features one despotic ruler who follows his subjects’ every wiggle “from sperm to worm”, one reluctantly virgin daughter (“Think of your position”; “I am, I wish it was horizontal”), one drippy suitor and one multipurpose character who flips from role to role by changing his hat. Riona O’Connor has a suitably 70s Lulu-like shout of a voice but does too much gurgling to be really convincing as a grown-up: she sings better than she swings. As the naughty king - ooh what a scamp that tyrant is - Howard Samuels dispenses oeillades, pecks on the cheeks and pats on the knees to the ladies in the front row. Sam Walters’s production is almost eerily pleasant. It’s like a panto that doesn’t yell but quietly chortles.":
-        st.subheader("Creation of the zoning")
-        images = Image.open('images/zoning.png')
-        st.image(images, width=None)
-
-
-    else:
-        st.subheader("Creation of the zoning")
-        images = Image.open('images/zoning.png')
-        st.image(images, width=None)
-
-    snippet = f"""
-
-    >>> import pandas as pd
-    >>> import numpy as  as np
-    >>> import nltk
-
-
-    >>> work in progress
-
-    """
-    code_header_placeholder = st.empty()
-    snippet_placeholder = st.empty()
-    code_header_placeholder.subheader(f"**Code for the step: 09 - Zoning**")
+    code_header_placeholder.subheader(f"**Code for the step: 06 - Text Summarization**")
     snippet_placeholder.code(snippet)
     st.markdown("---")
 
 
-    st.write(f"                                          ")
-    st.header("10 - Map reviews")
-    HtmlFile = open("corpus_I_map_v2.html", 'r', encoding='utf-8')
-    source_code = HtmlFile.read()
-    print(source_code)
-    components.html(source_code, height = 600)
-    st.markdown("---")
+# # Summarization
+#
+#     st.write(f"                                          ")
+#     st.header("07 - Zoning")
+#     if master_review == "DEFAULT REVIEW - This is the season in which theatres revisit their histories. In the crumbling glory of Wilton’s Music Hall, east London, Fiona Shaw is reprising her wild version of The Waste Land, talking about death in the City, with the aid of Music Hall voices. Hackney Empire has burst into its traditional life with rousing panto. Meanwhile, the Orange Tree is producing The Lady or the Tiger, which had its premiere at the theatre in 1975 and was revived there in 1989. Now it’s back again; I wish it wasn’t. Based on a whimsical 1882 story by Frank Stockton, the show has words by Michael Richmond and Jeremy Paul and music by Nola York, who once sang with the Chantelles and was the first woman to write a complete score for a West End musical. It has a few good mots, a dash of sauce, but hardly any point It features one despotic ruler who follows his subjects’ every wiggle “from sperm to worm”, one reluctantly virgin daughter (“Think of your position”; “I am, I wish it was horizontal”), one drippy suitor and one multipurpose character who flips from role to role by changing his hat. Riona O’Connor has a suitably 70s Lulu-like shout of a voice but does too much gurgling to be really convincing as a grown-up: she sings better than she swings. As the naughty king - ooh what a scamp that tyrant is - Howard Samuels dispenses oeillades, pecks on the cheeks and pats on the knees to the ladies in the front row. Sam Walters’s production is almost eerily pleasant. It’s like a panto that doesn’t yell but quietly chortles.":
+#         st.subheader("Creation of the zoning")
+#         images = Image.open('images/zoning.png')
+#         st.image(images, width=None)
+#
+#
+#     else:
+#         st.subheader("Creation of the zoning")
+#         images = Image.open('images/zoning.png')
+#         st.image(images, width=None)
+#
+#     snippet = f"""
+#
+#     >>> import pandas as pd
+#     >>> import numpy as  as np
+#     >>> import nltk
+#
+#
+#     >>> work in progress
+#
+#     """
+#     code_header_placeholder = st.empty()
+#     snippet_placeholder = st.empty()
+#     code_header_placeholder.subheader(f"**Code for the step: 07 - Zoning**")
+#     snippet_placeholder.code(snippet)
+#     st.markdown("---")
+#
+#
+#     st.write(f"                                          ")
+#     st.header("08 - Map reviews")
+#     HtmlFile = open("corpus_I_map_v2.html", 'r', encoding='utf-8')
+#     source_code = HtmlFile.read()
+#     print(source_code)
+#     components.html(source_code, height = 600)
+#     st.markdown("---")
+#
 
 
-
-
-if __name__=='__main__':
+if __name__ == '__main__':
     main()
 
 st.markdown(" ")
 st.markdown("### ** 👨🏼‍💻 App Contributors: **")
-st.image(['images/mylene.png','images/gaetan.png'], width=100,caption=["Mylène","Gaëtan"])
+st.image(['images/mylene.png', 'images/gaetan.png'], width=100, caption=["Mylène", "Gaëtan"])
 
 st.markdown(f"####  Link to Project Website [here]({'https://dramacritiques.com/fr/accueil/'}) 🚀 ")
-
 
 
 def image(src_as_string, **style):
@@ -644,7 +607,6 @@ def link(link, text, **style):
 
 
 def layout(*args):
-
     style = """
     <style>
       # MainMenu {visibility: hidden;}
@@ -692,6 +654,7 @@ def layout(*args):
             body(arg)
 
     st.markdown(str(foot), unsafe_allow_html=True)
+
 
 def footer2():
     myargs = [
