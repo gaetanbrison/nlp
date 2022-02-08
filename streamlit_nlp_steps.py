@@ -94,8 +94,6 @@ def main():
     # hide the footer
     hide_header_footer()
 
-    images = Image.open('images/binary.png')
-    st.image(images, width=400)
 
     st.markdown("# Behind the Machine 🔍 🖥")
     st.subheader(
