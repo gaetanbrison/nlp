@@ -129,7 +129,7 @@ def main():
     st.header("00 - Show  Dataset")
 
     if master_review == "DEFAULT REVIEW - This is the season in which theatres revisit their histories. In the crumbling glory of Wilton’s Music Hall, east London, Fiona Shaw is reprising her wild version of The Waste Land, talking about death in the City, with the aid of Music Hall voices. Hackney Empire has burst into its traditional life with rousing panto. Meanwhile, the Orange Tree is producing The Lady or the Tiger, which had its premiere at the theatre in 1975 and was revived there in 1989. Now it’s back again; I wish it wasn’t. Based on a whimsical 1882 story by Frank Stockton, the show has words by Michael Richmond and Jeremy Paul and music by Nola York, who once sang with the Chantelles and was the first woman to write a complete score for a West End musical. It has a few good mots, a dash of sauce, but hardly any point It features one despotic ruler who follows his subjects’ every wiggle “from sperm to worm”, one reluctantly virgin daughter (“Think of your position”; “I am, I wish it was horizontal”), one drippy suitor and one multipurpose character who flips from role to role by changing his hat. Riona O’Connor has a suitably 70s Lulu-like shout of a voice but does too much gurgling to be really convincing as a grown-up: she sings better than she swings. As the naughty king - ooh what a scamp that tyrant is - Howard Samuels dispenses oeillades, pecks on the cheeks and pats on the knees to the ladies in the front row. Sam Walters’s production is almost eerily pleasant. It’s like a panto that doesn’t yell but quietly chortles.":
-        num = st.number_input('No. of Rows', 5, 10)
+        num = st.number_input('No. of Rows', 10, 10)
         head = st.radio('View from top (head) or bottom (tail)', ('Head', 'Tail'))
 
         if head == 'Head':
@@ -211,6 +211,10 @@ def main():
     snippet_placeholder.code(snippet)
     st.markdown("---")
 
+    st.sidebar.header("Dashboard")
+    st.sidebar.markdown("---")
+    st.sidebar.text_area("The review you selected:", value=df['Review'][index_review], height=600)
+
     st.write(f"                                          ")
     st.header("02 - Tokenization")
     st.write(
@@ -266,7 +270,7 @@ inflectional suffixes and prefixes to bring out the word’s dictionary form. Fo
             list_lemma_.append(token.lemma_)
         df_lemmatization = pd.DataFrame(
             {'Text': list_text, 'Position': list_pos, 'Unique Code': list_lemma, 'Lemma': list_lemma_, })
-        st.dataframe(df_lemmatization)
+        st.dataframe(df_lemmatization, height=1000)
 
     else:
         st.markdown(
@@ -409,7 +413,7 @@ to detect sentiment in social data, gauge brand reputation, and understand custo
     if master_review == "DEFAULT REVIEW - This is the season in which theatres revisit their histories. In the crumbling glory of Wilton’s Music Hall, east London, Fiona Shaw is reprising her wild version of The Waste Land, talking about death in the City, with the aid of Music Hall voices. Hackney Empire has burst into its traditional life with rousing panto. Meanwhile, the Orange Tree is producing The Lady or the Tiger, which had its premiere at the theatre in 1975 and was revived there in 1989. Now it’s back again; I wish it wasn’t. Based on a whimsical 1882 story by Frank Stockton, the show has words by Michael Richmond and Jeremy Paul and music by Nola York, who once sang with the Chantelles and was the first woman to write a complete score for a West End musical. It has a few good mots, a dash of sauce, but hardly any point It features one despotic ruler who follows his subjects’ every wiggle “from sperm to worm”, one reluctantly virgin daughter (“Think of your position”; “I am, I wish it was horizontal”), one drippy suitor and one multipurpose character who flips from role to role by changing his hat. Riona O’Connor has a suitably 70s Lulu-like shout of a voice but does too much gurgling to be really convincing as a grown-up: she sings better than she swings. As the naughty king - ooh what a scamp that tyrant is - Howard Samuels dispenses oeillades, pecks on the cheeks and pats on the knees to the ladies in the front row. Sam Walters’s production is almost eerily pleasant. It’s like a panto that doesn’t yell but quietly chortles.":
         st.subheader("Analyse Your Text")
 
-        message = st.text_area("Enter Text", df["Review"][index_review])
+        message = st.text_area("Enter Text", df["Review"][index_review], height=250)
         if st.button("Run Sentiment Analysis"):
             blob = TextBlob(message)
             result_sentiment = blob.sentiment
@@ -496,7 +500,7 @@ to detect sentiment in social data, gauge brand reputation, and understand custo
     if master_review == "DEFAULT REVIEW - This is the season in which theatres revisit their histories. In the crumbling glory of Wilton’s Music Hall, east London, Fiona Shaw is reprising her wild version of The Waste Land, talking about death in the City, with the aid of Music Hall voices. Hackney Empire has burst into its traditional life with rousing panto. Meanwhile, the Orange Tree is producing The Lady or the Tiger, which had its premiere at the theatre in 1975 and was revived there in 1989. Now it’s back again; I wish it wasn’t. Based on a whimsical 1882 story by Frank Stockton, the show has words by Michael Richmond and Jeremy Paul and music by Nola York, who once sang with the Chantelles and was the first woman to write a complete score for a West End musical. It has a few good mots, a dash of sauce, but hardly any point It features one despotic ruler who follows his subjects’ every wiggle “from sperm to worm”, one reluctantly virgin daughter (“Think of your position”; “I am, I wish it was horizontal”), one drippy suitor and one multipurpose character who flips from role to role by changing his hat. Riona O’Connor has a suitably 70s Lulu-like shout of a voice but does too much gurgling to be really convincing as a grown-up: she sings better than she swings. As the naughty king - ooh what a scamp that tyrant is - Howard Samuels dispenses oeillades, pecks on the cheeks and pats on the knees to the ladies in the front row. Sam Walters’s production is almost eerily pleasant. It’s like a panto that doesn’t yell but quietly chortles.":
         st.subheader("Summarize Your Text")
 
-        message2 = st.text_area("Review", df["Review"][index_review])
+        message2 = st.text_area("Review", df["Review"][index_review], height=250)
         summary_options = st.selectbox("Choose Summarizer", ['sumy', 'gensim'])
         if st.button("Summarize"):
             if summary_options == 'sumy':
