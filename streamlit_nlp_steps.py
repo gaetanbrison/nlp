@@ -146,7 +146,7 @@ def main():
                                           '02 - Tokenization', '03 - Lemmatization','04 - Name Entity Recognition','05 - Sentiment Analysis',
                                           '06 - Text Summarization'])
 
-    index_review = st.number_input("Select a Review by entering index number:", min_value=0, max_value=20000, value=0,
+    index_review = st.sidebar.number_input("Select a Review by entering index number:", min_value=0, max_value=20000, value=0,
                                    step=1)
     st.markdown("---")
     st.write(f"                                          ")
