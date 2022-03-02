@@ -143,8 +143,9 @@ def main():
 
     st.sidebar.header("Select Project Step")
     nlp_steps = st.sidebar.selectbox('', ['00 - Show  Dataset', '01 - Basic Information',
-                                          '02 - Tokenization', '03 - Lemmatization','04 - Name Entity Recognition','05 - Sentiment Analysis',
-                                          '06 - Text Summarization'])
+                                          '02 - Tokenization', '03 - Lemmatization','04 - Name Entity Recognition',
+                                          '05 - Part of Speech','06 - Sentiment Analysis',
+                                          '07 - Text Summarization'])
 
     index_review = st.sidebar.number_input("Select a Review by entering index number:", min_value=0, max_value=20000, value=0,
                                    step=1)
@@ -400,9 +401,67 @@ def main():
         code_header_placeholder.subheader(f"**Code for the step: 04 - Name Entity Recognition**")
         snippet_placeholder.code(snippet)
         st.markdown("---")
+
+
+
+
+
+
+    if nlp_steps == "05 - Part of Speech":
+        st.sidebar.text_area("The review you selected:", value=df['Review'][index_review], height=600)
+        st.write(f"                                          ")
+        st.header("05 - Part of Speech")
+        st.write("""Part-of-speech (POS) tagging is a popular Natural Language Processing process which refers to categorizing words
+in a text in correspondence with a particular part of speech, depending on the definition of the word and its context.""")
+        if master_review == "DEFAULT REVIEW - This is the season in which theatres revisit their histories. In the crumbling glory of Wilton’s Music Hall, east London, Fiona Shaw is reprising her wild version of The Waste Land, talking about death in the City, with the aid of Music Hall voices. Hackney Empire has burst into its traditional life with rousing panto. Meanwhile, the Orange Tree is producing The Lady or the Tiger, which had its premiere at the theatre in 1975 and was revived there in 1989. Now it’s back again; I wish it wasn’t. Based on a whimsical 1882 story by Frank Stockton, the show has words by Michael Richmond and Jeremy Paul and music by Nola York, who once sang with the Chantelles and was the first woman to write a complete score for a West End musical. It has a few good mots, a dash of sauce, but hardly any point It features one despotic ruler who follows his subjects’ every wiggle “from sperm to worm”, one reluctantly virgin daughter (“Think of your position”; “I am, I wish it was horizontal”), one drippy suitor and one multipurpose character who flips from role to role by changing his hat. Riona O’Connor has a suitably 70s Lulu-like shout of a voice but does too much gurgling to be really convincing as a grown-up: she sings better than she swings. As the naughty king - ooh what a scamp that tyrant is - Howard Samuels dispenses oeillades, pecks on the cheeks and pats on the knees to the ladies in the front row. Sam Walters’s production is almost eerily pleasant. It’s like a panto that doesn’t yell but quietly chortles.":
+            HTML_WRAPPER = """<div style="overflow-x: auto; border: 1px solid #e6e9ef; border-radius: 0.25rem; padding: 1rem">{}</div>"""
+            st.markdown("This part assign a tag to each name and entity in a review: ")
+            # html = displacy.render(doc, style='ent', jupyter=True)
+            # html = html.replace("\n\n", "\n")
+            # st.write(HTML_WRAPPER.format(html), unsafe_allow_html=True)
+            docx = nlp(df["Review"][0].split(".")[0])
+            html = displacy.render(docx, style="dep")
+            html = html.replace("\n\n", "\n")
+            st.write(HTML_WRAPPER.format(html), unsafe_allow_html=True)
+
+        else:
+            HTML_WRAPPER = """<div style="overflow-x: auto; border: 1px solid #e6e9ef; border-radius: 0.25rem; padding: 1rem">{}</div>"""
+            st.markdown("This part assign a tag to each name and entity in a review: ")
+            # html = displacy.render(doc, style='ent', jupyter=True)
+            # html = html.replace("\n\n", "\n")
+            # st.write(HTML_WRAPPER.format(html), unsafe_allow_html=True)
+            docx = nlp(master_review.split(".")[0])
+            html = displacy.render(docx, style="dep")
+            html = html.replace("\n\n", "\n")
+            st.write(HTML_WRAPPER.format(html), unsafe_allow_html=True)
+
+        snippet = f"""
+
+        >>> import pandas as pd
+        >>> import numpy as  as np
+        >>> import nltk
+        >>> import spacy
+        >>> import htbuilder
+
+        >>> HTML_WRAPPER = ""<div style="overflow-x: auto; border: 1px solid #e6e9ef; border-radius: 0.25rem; padding: 1rem"></div>""
+
+        >>> docx = nlp(df["Review"][0])
+        >>> html = displacy.render(docx, style="dep")
+        >>> html = html.replace("\n\n", "\n")
+        >>> st.write(HTML_WRAPPER.format(html), unsafe_allow_html=True)
+
+
+        """
+        code_header_placeholder = st.empty()
+        snippet_placeholder = st.empty()
+        code_header_placeholder.subheader(f"**Code for the step: 05 - Part of Speech**")
+        snippet_placeholder.code(snippet)
+        st.markdown("---")
+
+
+
 # check dupication rate
 
-    # if master_review == "DEFAULT REVIEW - This is the season in which theatres revisit their histories. In the crumbling glory of Wilton’s Music Hall, east London, Fiona Shaw is reprising her wild version of The Waste Land, talking about death in the City, with the aid of Music Hall voices. Hackney Empire has burst into its traditional life with rousing panto. Meanwhile, the Orange Tree is producing The Lady or the Tiger, which had its premiere at the theatre in 1975 and was revived there in 1989. Now it’s back again; I wish it wasn’t. Based on a whimsical 1882 story by Frank Stockton, the show has words by Michael Richmond and Jeremy Paul and music by Nola York, who once sang with the Chantelles and was the first woman to write a complete score for a West End musical. It has a few good mots, a dash of sauce, but hardly any point It features one despotic ruler who follows his subjects’ every wiggle “from sperm to worm”, one reluctantly virgin daughter (“Think of your position”; “I am, I wish it was horizontal”), one drippy suitor and one multipurpose character who flips from role to role by changing his hat. Riona O’Connor has a suitably 70s Lulu-like shout of a voice but does too much gurgling to be really convincing as a grown-up: she sings better than she swings. As the naughty king - ooh what a scamp that tyrant is - Howard Samuels dispenses oeillades, pecks on the cheeks and pats on the knees to the ladies in the front row. Sam Walters’s production is almost eerily pleasant. It’s like a panto that doesn’t yell but quietly chortles.":
     #     st.markdown(" Duplication rate is defined as the ratio of  number of duplicates to total records in dataset.")
     #     doc = nlp(df["Review"][index_review])
     #     models = ["en_core_web_sm", "/path/to/model"]
@@ -440,7 +499,7 @@ def main():
     # snippet_placeholder.code(snippet)
     # st.markdown("---")
 # Sentiment Analysis
-    if nlp_steps == "05 - Sentiment Analysis":
+    if nlp_steps == "06 - Sentiment Analysis":
         st.sidebar.text_area("The review you selected:", value=df['Review'][index_review], height=600)
         st.write(f"                                          ")
         st.header("05 - Sentiment Analysis")
@@ -526,15 +585,15 @@ def main():
         """
         code_header_placeholder = st.empty()
         snippet_placeholder = st.empty()
-        code_header_placeholder.subheader(f"**Code for the step: 05 - Sentiment Analysis**")
+        code_header_placeholder.subheader(f"**Code for the step: 06 - Sentiment Analysis**")
         snippet_placeholder.code(snippet)
         st.markdown("---")
 
 # Summarization
-    if nlp_steps == "06 - Text Summarization":
+    if nlp_steps == "07 - Text Summarization":
         st.sidebar.text_area("The review you selected:", value=df['Review'][index_review], height=600)
         st.write(f"                                          ")
-        st.header("06 - Text Summarization")
+        st.header("07 - Text Summarization")
         if master_review == "DEFAULT REVIEW - This is the season in which theatres revisit their histories. In the crumbling glory of Wilton’s Music Hall, east London, Fiona Shaw is reprising her wild version of The Waste Land, talking about death in the City, with the aid of Music Hall voices. Hackney Empire has burst into its traditional life with rousing panto. Meanwhile, the Orange Tree is producing The Lady or the Tiger, which had its premiere at the theatre in 1975 and was revived there in 1989. Now it’s back again; I wish it wasn’t. Based on a whimsical 1882 story by Frank Stockton, the show has words by Michael Richmond and Jeremy Paul and music by Nola York, who once sang with the Chantelles and was the first woman to write a complete score for a West End musical. It has a few good mots, a dash of sauce, but hardly any point It features one despotic ruler who follows his subjects’ every wiggle “from sperm to worm”, one reluctantly virgin daughter (“Think of your position”; “I am, I wish it was horizontal”), one drippy suitor and one multipurpose character who flips from role to role by changing his hat. Riona O’Connor has a suitably 70s Lulu-like shout of a voice but does too much gurgling to be really convincing as a grown-up: she sings better than she swings. As the naughty king - ooh what a scamp that tyrant is - Howard Samuels dispenses oeillades, pecks on the cheeks and pats on the knees to the ladies in the front row. Sam Walters’s production is almost eerily pleasant. It’s like a panto that doesn’t yell but quietly chortles.":
             st.subheader("Summarize Your Text")
 
@@ -586,7 +645,7 @@ def main():
         """
         code_header_placeholder = st.empty()
         snippet_placeholder = st.empty()
-        code_header_placeholder.subheader(f"**Code for the step: 06 - Text Summarization**")
+        code_header_placeholder.subheader(f"**Code for the step: 07 - Text Summarization**")
         snippet_placeholder.code(snippet)
         st.markdown("---")
 
