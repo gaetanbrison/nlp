@@ -16,7 +16,7 @@ certifi
 cffi
 chardet
 charset-normalizer
-click
+click==7.1.3
 cycler
 cymem
 debugpy
